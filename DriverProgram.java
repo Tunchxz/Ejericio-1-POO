@@ -1,7 +1,22 @@
+
+/**
+ * Esta clase representa un programa de gestión de ventas de 
+ * boletos para un evento musical.
+ * 
+ * @author Cristian Túnchez
+ * @version 1.0
+ * @since 14-08-2023
+ */
+
 import java.util.Scanner;
 import java.util.Random;
 
 public class DriverProgram {
+    /**
+     * Punto de entrada del programa.
+     * 
+     * @param args Argumentos de línea de comandos (no utilizados en este programa)
+     */
     public static void main(String[] args) {
 
         Comprador cliente = null;
@@ -132,6 +147,10 @@ public class DriverProgram {
     }
 }
 
+/**
+ * Esta clase representa a un comprador interesado en adquirir boletos para el
+ * evento.
+ */
 class Comprador {
     private String nombre;
     private String email;
@@ -182,6 +201,13 @@ class Comprador {
         return ticket;
     }
 
+    /**
+     * Genera un número de ticket aleatorio y verifica si este número cae dentro de
+     * un rango permitido para la compra.
+     *
+     * @return {@code true} si el número de ticket está dentro del rango permitido,
+     *         {@code false} en caso contrario.
+     */
     public boolean solicitarCompra() {
         Random numero = new Random();
         ticket = numero.nextInt(15000) + 1;
@@ -193,6 +219,12 @@ class Comprador {
         return ticket >= rangoMin && ticket <= rangoMax;
     }
 
+    /**
+     * Asigna aleatoriamente una localidad para el comprador.
+     *
+     * @return El número de la localidad asignada: 1 para Localidad 1, 5 para
+     *         Localidad 5, 10 para Localidad 10.
+     */
     public int asignarLocalidad() {
         Random numero = new Random();
         int localidad = numero.nextInt(3);
@@ -206,12 +238,23 @@ class Comprador {
     }
 }
 
+/**
+ * Esta clase representa una localidad del evento.
+ */
 class Localidad {
     private Comprador swiftie;
 
     public Localidad() {
     }
 
+    /**
+     * Procesa la solicitud de compra de boletos para el comprador dado en una
+     * localidad específica.
+     *
+     * @param swiftie   El comprador que realiza la solicitud de compra de boletos.
+     * @param validador El validador que contiene información sobre la
+     *                  disponibilidad de boletos en las localidades.
+     */
     public void solicitudBoletos(Comprador swiftie, Validador validador) {
         this.swiftie = swiftie;
         int localidad = swiftie.asignarLocalidad();
@@ -219,6 +262,7 @@ class Localidad {
         int presupuesto = swiftie.getPresupuestoMax();
 
         switch (localidad) {
+            // código para la localidad 1
             case 1: {
                 int boletosLocal1 = validador.getLocalidad1();
                 // Validar espacio
@@ -251,6 +295,7 @@ class Localidad {
                         + ") participa, pero tu presupuesto es insuficiente para un boleto para un boleto en la Localidad 1 ($100).");
                 break;
             }
+            // código para la localidad 5
             case 5: {
                 int boletosLocal5 = validador.getLocalidad5();
                 // Validar espacio
@@ -283,6 +328,7 @@ class Localidad {
                         + ") participa, pero tu presupuesto es insuficiente para un boleto en la Localidad 5 ($500).");
                 break;
             }
+            // código para la localidad 10
             case 10: {
                 int boletosLocal10 = validador.getLocalidad10();
                 // Validar espacio
@@ -323,6 +369,10 @@ class Localidad {
     }
 }
 
+/**
+ * Esta clase se encarga de validar la disponibilidad de boletos en las
+ * diferentes localidades.
+ */
 class Validador {
     private int localidad1 = 20;
     private int localidad5 = 20;
